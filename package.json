@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Wist9063/spotify-data/issues"
   },
-  "homepage": "https://github.com/Wist9063/spotify-data#readme"
+  "homepage": "https://github.com/Wist9063/spotify-data#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
 }

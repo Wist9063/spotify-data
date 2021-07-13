@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
   const send = {
     name: playing.item.name,
     url: playing.item.external_urls.spotify,
-    artist: playing.item.artist[0].name,
+    artist: playing.item.artists[0].name,
     formatted: `${playing.item.name} - ${playing.item.artists[0].name}`
   };
 

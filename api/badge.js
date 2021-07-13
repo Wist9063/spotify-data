@@ -17,7 +17,8 @@ module.exports = async (req, res) => {
     label: 'listening to',
     message: `${playing.item.name} By ${playing.item.artists[0].name}`,
     namedLogo: 'Spotify',
-    color: '1db954'
+    color: '1db954',
+    logoColor: 'White'
   };
 
   res.send(send);

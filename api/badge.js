@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 
+
 module.exports = async (req, res) => {
   const b64 = Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_SECRET_ID}`).toString('base64');
   const body = new URLSearchParams({
@@ -9,18 +10,23 @@ module.exports = async (req, res) => {
   const token = await fetch('https://accounts.spotify.com/api/token', {method: 'post', body: body, headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${b64}`}});
   const getToken = await token.json();
 
-  let playing, send;
+  let send;
   try {
     const nowPlaying = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {headers: {'Authorization': `Bearer ${getToken.access_token}`}});
-    playing = await nowPlaying.json();
-    send = {
-      schemaVersion: 1,
-      label: 'listening to',
-      message: `${playing.item.name} By ${playing.item.artists[0].name}`,
-      namedLogo: 'Spotify',
-      color: '1db954',
-      logoColor: 'white'
-    };
+    const playing = await nowPlaying.json();
+    if (req.query.redirect) {
+      res.redirect(playing.item.external_urls.spotify);
+    } else {
+      send = {
+        schemaVersion: 1,
+        label: 'listening to',
+        message: `${playing.item.name} By ${playing.item.artists[0].name}`,
+        namedLogo: 'Spotify',
+        color: '1db954',
+        logoColor: 'white'
+      };
+      return res.send(send);
+    }
   } catch (e) {
     send = {
       schemaVersion: 1,
@@ -30,7 +36,7 @@ module.exports = async (req, res) => {
       color: '1db954',
       logoColor: 'white'
     };
+    return res.send(send);
   }
 
-  res.send(send);
 };

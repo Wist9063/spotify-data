@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
       name: playing.item.name,
       url: playing.item.external_urls.spotify,
       artist: playing.item.artists[0].name,
-      formatted: `${playing.item.name} - ${playing.item.artists[0].name}`
+      formatted: `${playing.item.name} by ${playing.item.artists[0].name}`
     };
   } catch (e) {
     send = {

@@ -1,6 +1,5 @@
 const fetch = require('node-fetch');
 
-
 module.exports = async (req, res) => {
   const b64 = Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_SECRET_ID}`).toString('base64');
   const body = new URLSearchParams({

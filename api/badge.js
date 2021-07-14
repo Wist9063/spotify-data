@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 
 module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
   const b64 = Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_SECRET_ID}`).toString('base64');
   const body = new URLSearchParams({
     grant_type: 'refresh_token',

@@ -9,17 +9,28 @@ module.exports = async (req, res) => {
   const token = await fetch('https://accounts.spotify.com/api/token', {method: 'post', body: body, headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${b64}`}});
   const getToken = await token.json();
 
-  const nowPlaying = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {headers: {'Authorization': `Bearer ${getToken.access_token}`}});
-  const playing = await nowPlaying.json();
-
-  const send = {
-    schemaVersion: 1,
-    label: 'listening to',
-    message: `${playing.item.name} By ${playing.item.artists[0].name}`,
-    namedLogo: 'Spotify',
-    color: '1db954',
-    logoColor: 'White'
-  };
+  let playing, send;
+  try {
+    const nowPlaying = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {headers: {'Authorization': `Bearer ${getToken.access_token}`}});
+    playing = await nowPlaying.json();
+    send = {
+      schemaVersion: 1,
+      label: 'listening to',
+      message: `${playing.item.name} By ${playing.item.artists[0].name}`,
+      namedLogo: 'Spotify',
+      color: '1db954',
+      logoColor: 'white'
+    };
+  } catch (e) {
+    send = {
+      schemaVersion: 1,
+      label: 'listening to',
+      message: 'nothing',
+      namedLogo: 'Spotify',
+      color: '1db954',
+      logoColor: 'white'
+    };
+  }
 
   res.send(send);
 };

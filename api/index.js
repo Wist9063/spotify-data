@@ -9,15 +9,24 @@ module.exports = async (req, res) => {
   const token = await fetch('https://accounts.spotify.com/api/token', {method: 'post', body: body, headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': `Basic ${b64}`}});
   const getToken = await token.json();
 
-  const nowPlaying = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {headers: {'Authorization': `Bearer ${getToken.access_token}`}});
-  const playing = await nowPlaying.json();
-
-  const send = {
-    name: playing.item.name,
-    url: playing.item.external_urls.spotify,
-    artist: playing.item.artists[0].name,
-    formatted: `${playing.item.name} - ${playing.item.artists[0].name}`
-  };
+  let playing, send;
+  try {
+    const nowPlaying = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {headers: {'Authorization': `Bearer ${getToken.access_token}`}});
+    playing = await nowPlaying.json();
+    send = {
+      name: playing.item.name,
+      url: playing.item.external_urls.spotify,
+      artist: playing.item.artists[0].name,
+      formatted: `${playing.item.name} - ${playing.item.artists[0].name}`
+    };
+  } catch (e) {
+    send = {
+      name: 'not playing',
+      url: null,
+      artist: 'not playing',
+      formatted: 'not playing'
+    };
+  }
 
   res.send(send);
 };

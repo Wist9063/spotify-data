@@ -22,10 +22,10 @@ module.exports = async (req, res) => {
     };
   } catch (e) {
     send = {
-      name: 'not playing',
+      name: 'nothing',
       url: null,
-      artist: 'not playing',
-      formatted: 'not playing'
+      artist: 'nothing',
+      formatted: 'nothing'
     };
   }
 

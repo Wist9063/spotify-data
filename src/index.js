@@ -66,8 +66,13 @@ async function getNowPlaying(response) {
 async function handleRequest() {
   const response = await fetchToken();
   const nowPlaying = await getNowPlaying(response);
+  const data = {
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
+  }
 
-  return new Response(JSON.stringify(nowPlaying));
+  return new Response(JSON.stringify(nowPlaying), data);
 }
 
 addEventListener('fetch', event => {

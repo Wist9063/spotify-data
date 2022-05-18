@@ -1,0 +1,6 @@
+name = "spotify-data"
+main = "src/index.js"
+compatibility_date = "2022-05-18"
+
+[vars]
+SPOTIFY_CLIENT_ID = "2d109cdfd02746b39aa4797df12d2c7d"

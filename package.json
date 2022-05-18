@@ -18,5 +18,8 @@
   "homepage": "https://github.com/Wist9063/spotify-data#readme",
   "dependencies": {
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "wrangler": "^2.0.5"
   }
 }

@@ -7,6 +7,7 @@
       "node": true
     },
     "extends": "eslint:recommended",
+    "soruceType": "module",
     "rules": {
       "no-console": "off",
       "indent": [
